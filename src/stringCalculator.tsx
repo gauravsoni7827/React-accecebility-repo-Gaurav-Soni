@@ -48,6 +48,9 @@ function StringCalculator() {
         placeholder="Enter numbers separated by commas, e.g., 1,2,3"
         value={input}
         onChange={(e) => setInput(e.target.value)}
+        onKeyUp={(e) => {
+          if (e.key == 'Enter') handleCalculate();
+        }}
         style={{
           margin: '10px 0',
           width: '100%',
