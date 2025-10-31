@@ -8,12 +8,10 @@ describe('String calculator Component', () => {
     render(<StringCalculator />);
 
     expect(
-      screen.getByRole('heading', { level: 2, name: /string calculator/i })
+      screen.getByRole('heading', { level: 1, name: /string calculator/i })
     ).toBeInTheDocument();
 
-    expect(
-      screen.getByRole('heading', { level: 1, name: /enter numbers/i })
-    ).toBeInTheDocument();
+    expect(screen.getByLabelText(/enter numbers/i)).toBeInTheDocument();
   });
 
   test('renders image with correct src and dimensions', () => {
@@ -55,8 +53,14 @@ describe('String calculator Component', () => {
     expect(result).not.toBeInTheDocument();
   });
 
-  test("renders alert message with role='alert'", () => {
+  test('alert message appears only when there is an error', () => {
     render(<StringCalculator />);
+
+    expect(screen.queryByRole('alert')).not.toBeInTheDocument();
+
+    const button = screen.getByRole('button', { name: /calculate/i });
+    fireEvent.click(button);
+
     const alert = screen.getByRole('alert');
     expect(alert).toBeInTheDocument();
     expect(
